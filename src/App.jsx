@@ -10,7 +10,7 @@ import Register from './pages/Register';
 function App() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
-
+  console.log(user);
   //create function to fetch user data
   useEffect(() => {
     const fetchUser = async () => {
