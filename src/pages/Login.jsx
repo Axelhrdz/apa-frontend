@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, setIsLoggedIn }) => {
     //in case of error, data will be stored here
     const [error, setError] = useState('');
     //here we will store data of form
@@ -36,6 +36,7 @@ const Login = ({ setUser }) => {
             const res = await axios.post('/api/users/login', formData);
             console.log(res.data);
             localStorage.setItem('token', res.data.token);
+            // setIsLoggedIn(true);
             setUser(res.data.user);
             navigate('/');
         }

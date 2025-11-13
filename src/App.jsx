@@ -10,7 +10,17 @@ import Register from './pages/Register';
 function App() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
-  console.log(user);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  //----- render user info right after login -----
+  
+
+  //------- Helper Functions -------
+
+
+  console.log(`main app user info:`, user);
+
   //create function to fetch user data
   useEffect(() => {
     const fetchUser = async () => {
@@ -27,20 +37,28 @@ function App() {
           localStorage.removeItem('token');
         }
       }
+      setIsLoading(false);
     };
     fetchUser();
-  },[]);
+  },[localStorage.getItem('token')]);
 
+  if(isLoading) {
+    return (
+      <div className='bg-stone-900 text-white h-screen flex flex-col items-center justify-center'>
+        <div id='loading-div' className='text-2xl font-bold'>Loading...</div>
+      </div>
+    );
+  }
+  
 
 
   return(
     <Router>
-      <Navbar />
-
+      <Navbar user={user} setUser={setUser} />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login setUser={setUser} />} />
-        <Route path='/register' element={<Register setUser={setUser}/>} />
+        <Route path='/' element={<Home user={user} error={error} />} />
+        <Route path='/login' element={user ? <Navigate to='/' /> : <Login setUser={setUser} />} />
+        <Route path='/register' element={user ? <Navigate to='/' /> : <Register setUser={setUser}/>} />
       </Routes>
     </Router>
   )
