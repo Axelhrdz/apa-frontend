@@ -10,6 +10,7 @@ const Register = ({ setUser }) => {
     //here we will store data of form
     const [formData, setFormData] = useState({
         username: '',
+        numEmpleado: '',
         email: '',
         password: ''
     });
@@ -18,7 +19,7 @@ const Register = ({ setUser }) => {
     //clean input fields in case of error
     useEffect(() => {
         if(error) {
-            setFormData({username: '', email: '', password: ''});
+            setFormData({username: '', numEmpleado: '', email: '', password: ''});
             setTimeout(() => {
                 setError('');
             }, 3000);
@@ -59,6 +60,10 @@ const Register = ({ setUser }) => {
                 <div className='username-input-div flex gap-4'>
                   <label htmlFor="username">Username</label>
                   <input className='bg-stone-100 text-black' type="text" id='username' required placeholder='Enter your username' name='username' onChange={handleChange} value={formData.username}/>
+                </div>
+                <div className='numEmpleado-input-div flex gap-4'>
+                  <label htmlFor="numEmpleado">Numero de emeplado</label>
+                  <input className='bg-stone-100 text-black' type="text" id='numEmpleado' required placeholder='Enter your number employee' name='numEmpleado' onChange={handleChange} value={formData.numEmpleado}/>
                 </div>
                 <div className='email-input-div flex gap-4'>
                     <label htmlFor="email">Email</label>

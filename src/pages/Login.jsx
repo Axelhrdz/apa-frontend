@@ -10,6 +10,7 @@ const Login = ({ setUser, setIsLoggedIn }) => {
     //here we will store data of form
     const [formData, setFormData] = useState({
         email: '',
+        numEmpleado: '',
         password: ''
     });
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Login = ({ setUser, setIsLoggedIn }) => {
     //clean input fields in case of error
     useEffect(() => {
         if(error) {
-            setFormData({email: '', password: ''});
+            setFormData({email: '', numEmpleado: '', password: ''});
             setTimeout(() => {
                 setError('');
             }, 3000);
@@ -59,6 +60,10 @@ const Login = ({ setUser, setIsLoggedIn }) => {
                 <div className='email-input-div flex gap-4'>
                     <label htmlFor="email">Email</label>
                     <input className='bg-stone-100 text-black' type="email" id="email" required placeholder='Enter your email' name='email' onChange={handleChange} value={formData.email} />
+                </div>
+                <div className='numEmpleado-input-div flex gap-4'>
+                    <label htmlFor="numEmpleado">Numero de emeplado</label>
+                    <input className='bg-stone-100 text-black' type="text" id='numEmpleado' required placeholder='Enter your number employee' name='numEmpleado' onChange={handleChange} value={formData.numEmpleado}/>
                 </div>
                 <div className='password-input-div flex gap-4'>
                     <label htmlFor="password">Password</label>
