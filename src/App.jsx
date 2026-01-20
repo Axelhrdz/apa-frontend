@@ -5,7 +5,12 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Overview from './components/Overview';
+import Test from './components/Test';
 
+import Fraccionamientos from './pages/overview/Fraccionamientos';
+import AperturasMasivas from './pages/overview/AperturasMasivas';
+import AutosuficientesMasivas from './pages/overview/AutosuficientesMasivas';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -59,6 +64,18 @@ function App() {
         <Route path='/' element={<Home user={user} error={error} />} />
         <Route path='/login' element={user ? <Navigate to='/' /> : <Login setUser={setUser} />} />
         <Route path='/register' element={user ? <Navigate to='/' /> : <Register setUser={setUser}/>} />
+
+        {/* tools dahsboard */}
+        <Route path='/overview' element={<Overview />} />
+
+        {/* way of using tools component with user auth */}
+        {/* <Route path='/tools' element={user ? <Tools /> : <Navigate to='/login' />} /> */}
+
+
+
+        <Route path='/fraccionamientos' element={<Fraccionamientos />} />
+        <Route path='/aperturas-masivas' element={<AperturasMasivas />} />
+        <Route path='/autosuficientes-masivas' element={<AutosuficientesMasivas />} />
       </Routes>
     </Router>
   )
