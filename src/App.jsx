@@ -24,7 +24,7 @@ function App() {
   //------- Helper Functions -------
 
 
-  console.log(`main app user info:`, user);
+  // console.log(`main app user info:`, user);
 
   //create function to fetch user data
   useEffect(() => {
