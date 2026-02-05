@@ -13,8 +13,9 @@ const handleSubmit = async (e) => {
 
 
   try {
-    const res = await axios.post('http://localhost:3000/api/submit-xlsx', formData);
+    const res = await axios.post('http://localhost:3000/aperturas_masivas/apertura', formData);
     console.log(res.data);
+    // return res.data;
   } catch (error) {
     console.error('Error during fetching operation:', error);
   }
