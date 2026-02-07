@@ -9,7 +9,7 @@ const handleSubmit = async (e) => {
   //getting form data
   const formData = new FormData(e.target);
   const formValues = Object.fromEntries(formData);
-  console.log(formValues);  //here getting the file value and the other values 
+  // console.log(formValues);  //here getting the file value and the other values 
 
 
   try {
@@ -19,7 +19,7 @@ const handleSubmit = async (e) => {
         responseType: 'blob',
       }
     );
-    console.log(res.data);
+    // console.log(res.data);
 
     //create blob
     const blob = new Blob([res.data], { type: 'text/plain' });
@@ -60,19 +60,35 @@ const AperturasMasivas = () => {
         </div>
 
         <div className='flex flex-col gap-2'>
-          <label htmlFor="test1">Test 1</label>
-          <input required type="text" id="test1" name="test1" className='border-2 border-stone-300 rounded-md p-1'/>
-        </div>
-
-        {/* <div className='flex flex-col gap-2'>
-          <label htmlFor="test2">Test 2</label>
-          <input required type="text" id="test2" name="test2" className='border-2 border-stone-300 rounded-md p-1'/>
+          <label htmlFor="tipo_predio">Tipo de predio</label>
+          <select required id="tipo_predio" name="tipo_predio" className='border-2 border-stone-300 rounded-md p-1'>
+            <option value="null">Seleccione...</option>
+            <option value="casa">Casa habitación</option>
+            <option value="terreno">Terreno</option>
+          </select>
         </div>
 
         <div className='flex flex-col gap-2'>
-          <label htmlFor="test3">Test 3</label>
-          <input required type="text" id="test3" name="test3" className='border-2 border-stone-300 rounded-md p-1'/>
-        </div> */}
+          <label htmlFor="conexiones">Conexiones</label>
+          <select required id="conexiones" name="conexiones" className='border-2 border-stone-300 rounded-md p-1'>
+            <option value="null">Seleccione...</option>
+            <option value="1">1. Ninguna</option>
+            <option value="2">2. Conexion Agua</option>
+            <option value="3">3. Conexion drenaje</option>
+            <option value="4">4. Conexion agua, conexion drenaje</option>        
+          </select>
+        </div>
+
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="cobros">Cobros</label>
+          <select required id="cobros" name="cobros" className='border-2 border-stone-300 rounded-md p-1'>
+            <option value="null">Seleccione...</option>
+            <option value="1">1. Agua, Infraestructura y colectores</option>
+            <option value="2">2. Agua, Infraestructura</option>
+            <option value="3">3. Agua</option>
+            <option value="5">5. Infraestructura y colectores</option>
+          </select>
+        </div>
 
         <button type='submit' className='text-white bg-blue-500 px-4 py-2 rounded-md cursor-pointer'>Enviar</button>
       </form>
