@@ -13,8 +13,31 @@ const handleSubmit = async (e) => {
 
 
   try {
-    const res = await axios.post('http://localhost:3000/aperturas_masivas/apertura', formData);
+    const res = await axios.post(
+      'http://localhost:3000/aperturas_masivas/apertura', formData,
+      {
+        responseType: 'blob',
+      }
+    );
     console.log(res.data);
+
+    //create blob
+    const blob = new Blob([res.data], { type: 'text/plain' });
+
+    //create url from blob, to download
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'test.txt');
+    document.body.appendChild(link);
+    link.click();
+
+
+    //cleanup
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+
     // return res.data;
   } catch (error) {
     console.error('Error during fetching operation:', error);
