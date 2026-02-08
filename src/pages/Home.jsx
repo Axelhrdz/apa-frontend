@@ -18,7 +18,7 @@ const Home = ({ user, error }) => {
         </div>
       ) : (
         <div>
-          <h2>Please login or register to conitnue <Link className='text-blue-500' to='/login'>Login</Link> or <Link className='text-blue-500' to='/register'>Register</Link></h2>
+          <h2>Please login or register to conitnue <Link className='text-blue-500' to='/login'>Login</Link> or <Link className='text-blue-500' to='/register'>Register</Link> or go to <Link className='text-blue-500' to='/overview'>Overview</Link></h2>
         </div>
       )}
 
