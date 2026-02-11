@@ -14,7 +14,7 @@ const handleSubmit = async (e) => {
 
   try {
     const res = await axios.post(
-      'http://apa-backend-2g9k.onrender.com//aperturas_masivas/apertura', formData,
+      'https://apa-frontend-liard.vercel.app/aperturas_masivas/apertura', formData,
       {
         responseType: 'blob',
       }
