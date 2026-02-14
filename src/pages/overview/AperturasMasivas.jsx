@@ -15,6 +15,7 @@ const handleSubmit = async (e) => {
   try {
     const res = await axios.post(
       'https://apa-backend-2g9k.onrender.com/aperturas_masivas/apertura', formData,
+      // 'http://localhost:3000/aperturas_masivas/apertura', formData,
       {
         responseType: 'blob',
       }
