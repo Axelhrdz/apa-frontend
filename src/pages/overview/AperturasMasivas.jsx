@@ -14,7 +14,7 @@ const handleSubmit = async (e) => {
 
   try {
     const res = await axios.post(
-      'http://localhost:3000/aperturas_masivas/apertura', formData,
+      'https://apa-frontend-liard.vercel.app/aperturas-masivas/apertura', formData,
       {
         responseType: 'blob',
       }
