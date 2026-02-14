@@ -28,7 +28,7 @@ const handleSubmit = async (e) => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'test.txt');
+    link.setAttribute('download', formValues.folio);
     document.body.appendChild(link);
     link.click();
 
@@ -55,6 +55,10 @@ const AperturasMasivas = () => {
       <br />
 
       <form encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone-100 p-4 rounded-md text-black max-w-md mx-auto'>
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="folio">Folio / nombre del archivo</label>
+          <input type="text" name='folio' id='folio' className='border-2 border-stone-300 rounded-md p-1' />
+        </div>
         <div>
           <input type="file" name='file' id='file' className='border-2 border-stone-300 rounded-md p-1'/>
         </div>
