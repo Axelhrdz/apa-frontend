@@ -9,7 +9,7 @@ const Home = ({ user, error }) => {
     <div className='bg-stone-900 text-white h-screen flex flex-col items-center justify-center'>
       <h1>Home</h1>
       {/*---- render error ----- */}
-      {error && <p className='text-red-500'>{error}</p>}
+      {/* {error && <p className='text-red-500'>{error}</p>} */}
 
       {/* ---- render user or login message ----- */}
       {user ? (
