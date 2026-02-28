@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 const Home = ({ user, error }) => {
   
 
-  console.log(user)
+  console.log(user.user);
   return (
     <div className='bg-stone-900 text-white h-screen flex flex-col items-center justify-center'>
       <h1>Home</h1>
@@ -14,7 +14,7 @@ const Home = ({ user, error }) => {
       {/* ---- render user or login message ----- */}
       {user ? (
         <div>
-          <h2>Welcome, {user.username}!</h2>
+          <h2>Welcome, {user.user.username}!</h2>
         </div>
       ) : (
         <div>

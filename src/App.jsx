@@ -32,12 +32,13 @@ function App() {
       let token = localStorage.getItem('token');
       if(token) {
         try {
-          const res = await axios.get('/api/users/me', {
+          const res = await axios.get('http://localhost:3000/users/me', {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data);
         }
         catch(error) {
+          // console.log('failed to fetch user data');
           setError('failed to fetch user data');
           localStorage.removeItem('token');
         }
