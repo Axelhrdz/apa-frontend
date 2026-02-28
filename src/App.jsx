@@ -32,12 +32,13 @@ function App() {
       let token = localStorage.getItem('token');
       if(token) {
         try {
-          const res = await axios.get('/api/users/me', {
+          const res = await axios.get('http://localhost:3000/users/me', {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data);
         }
         catch(error) {
+          // console.log('failed to fetch user data');
           setError('failed to fetch user data');
           localStorage.removeItem('token');
         }
@@ -66,7 +67,7 @@ function App() {
         <Route path='/register' element={user ? <Navigate to='/' /> : <Register setUser={setUser}/>} />
 
         {/* tools dahsboard */}
-        <Route path='/overview' element={<Overview />} />
+        <Route path='/overview' element={user ? <Overview /> : <Navigate to='/login' />} />
 
         {/* way of using tools component with user auth */}
         {/* <Route path='/tools' element={user ? <Tools /> : <Navigate to='/login' />} /> */}
@@ -74,7 +75,7 @@ function App() {
 
 
         <Route path='/fraccionamientos' element={<Fraccionamientos />} />
-        <Route path='/aperturas-masivas' element={<AperturasMasivas />} />
+        <Route path='/aperturas-masivas' element={user ? <AperturasMasivas /> : <Navigate to='/login' />} />
         <Route path='/autosuficientes-masivas' element={<AutosuficientesMasivas />} />
       </Routes>
     </Router>
