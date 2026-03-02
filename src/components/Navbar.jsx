@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate();
-  // console.log(`user from nav:}`, user)
+  console.log(`user from nav:}`, user)
 
 
   //------- Helper Functions -------
