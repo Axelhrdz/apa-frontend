@@ -34,7 +34,11 @@ const Login = ({ setUser }) => {
         e.preventDefault();
 
         try {
-            const res = await axios.post('http://localhost:3000/auth/login', formData);
+            const res = await axios.post(
+                // 'http://localhost:3000/auth/login', 
+                'https://apa-backend-2g9k.onrender.com/auth/login',
+                formData
+            );
             console.log(res.data);
             localStorage.setItem('token', res.data.token);
             setUser(res.data.user);
