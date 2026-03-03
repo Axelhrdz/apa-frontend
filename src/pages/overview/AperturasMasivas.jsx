@@ -63,8 +63,8 @@ const AperturasMasivas = () => {
 
   
   return (
-    <div className='bg-stone-900 text-white h-screen'>
-      <div className='text-center text-2xl font-thin py-3 bg-gradient-to-b from-stone-700 to-stone-900 text-stone-200'>
+    <div className='bg-[#000] text-white h-screen'>
+      <div className='text-center text-2xl font-thin py-5 '>
         <h1>Aperturas Masivas</h1>
       </div>
       {/* <span className=''>This is the aperturas masivas page</span> */}
@@ -72,7 +72,7 @@ const AperturasMasivas = () => {
       <br />
       <br />
 
-      <form encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone-300 text-stone-700 p-4 rounded-md max-w-md mx-auto'>
+      <form encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone_700 text-white p-4 max-w-md mx-auto border-1'>
         <div className='flex flex-col gap-2'>
           <label htmlFor="folio">Folio / nombre del archivo</label>
           <input required type="text" name='folio' id='folio' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' />
