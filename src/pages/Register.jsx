@@ -36,8 +36,8 @@ const Register = ({ setUser }) => {
 
         try {
             const res = await axios.post(
-                'http://localhost:3000/auth/register', 
-                // 'https://apa-backend-2g9k.onrender.com/auth/register',
+                // 'http://localhost:3000/auth/register', 
+                'https://apa-backend-2g9k.onrender.com/auth/register',
                 formData
             );
             console.log(res.data);
