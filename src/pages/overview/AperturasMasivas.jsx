@@ -1,5 +1,16 @@
 import React from 'react'
 import axios from 'axios';
+import { useState } from 'react';
+
+
+
+// const [conexiones, setConexiones] = useState('null');
+// const [cobros, setCobros] = useState('null');
+// const [baldio, setBaldio] = useState('null');
+
+// const handleTipoPredioChange = (e) => {
+//   setTipoPredio(e.target.value);
+// }
 
 
 const handleSubmit = async (e) => {
@@ -47,9 +58,13 @@ const handleSubmit = async (e) => {
 
 
 const AperturasMasivas = () => {
+
+  // const [tipoPredio, setTipoPredio] = useState('null');
+
+  
   return (
-    <div className='bg-stone-900 text-white h-screen'>
-      <div className='text-center text-2xl font-thin py-3 bg-gradient-to-b from-stone-700 to-stone-900 text-stone-200'>
+    <div className='bg-[#000] text-white h-screen'>
+      <div className='text-center text-2xl font-thin py-5 '>
         <h1>Aperturas Masivas</h1>
       </div>
       {/* <span className=''>This is the aperturas masivas page</span> */}
@@ -57,19 +72,21 @@ const AperturasMasivas = () => {
       <br />
       <br />
 
-      <form encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone-300 text-stone-700 p-4 rounded-md max-w-md mx-auto'>
+      <form encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone_700 text-white p-4 max-w-md mx-auto border-1'>
         <div className='flex flex-col gap-2'>
           <label htmlFor="folio">Folio / nombre del archivo</label>
-          <input type="text" name='folio' id='folio' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' />
+          <input required type="text" name='folio' id='folio' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' />
         </div>
+
         <div>
-          <input type="file" name='file' id='file' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'/>
+          <input required type="file" name='file' id='file' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'/>
         </div>
+        
 
         <div className='flex flex-col gap-2'>
           <label htmlFor="tipo_servicio">Tipo de predio</label>
           <select required id="tipo_servicio" name="tipo_servicio" className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'>
-            <option value="null">Seleccione...</option>
+            <option value="">Seleccione...</option>
             <option value="H">Habitacional</option>
             <option value="C">Comercial</option>
             <option value="I">Industrial</option>
@@ -79,7 +96,7 @@ const AperturasMasivas = () => {
 
         {/* <div className='flex flex-col gap-2'>
           <label htmlFor="tipo_predio">Tipo de predio</label>
-          <select required id="tipo_predio" name="tipo_predio" className='border-2 border-stone-300 rounded-md p-1'>
+          <select id="tipo_predio" name="tipo_predio" className='border-2 border-stone-300 rounded-md p-1'>
             <option value="null">Seleccione...</option>
             <option value="casa">Casa habitación</option>
             <option value="terreno">Terreno</option>
@@ -89,7 +106,7 @@ const AperturasMasivas = () => {
         <div className='flex flex-col gap-2'>
           <label htmlFor="conexiones">Conexiones</label>
           <select required id="conexiones" name="conexiones" className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'>
-            <option value="null">Seleccione...</option>
+            <option value="" >Seleccione...</option>
             <option value="1">1. Ninguna</option>
             <option value="2">2. Conexion Agua</option>
             <option value="3">3. Conexion drenaje</option>
@@ -100,7 +117,7 @@ const AperturasMasivas = () => {
         <div className='flex flex-col gap-2'>
           <label htmlFor="cobros">Cobros</label>
           <select required id="cobros" name="cobros" className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'>
-            <option value="null">Seleccione...</option>
+            <option value="">Seleccione...</option>
             <option value="1">1. Agua, Infraestructura y colectores</option>
             <option value="2">2. Agua, Infraestructura</option>
             <option value="3">3. Agua</option>
@@ -111,7 +128,7 @@ const AperturasMasivas = () => {
         <div className='flex gap-2'>
           <label htmlFor="baldio">Baldio</label>
           <select required id="baldio" name="baldio" className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'>
-            <option value="null">Seleccione...</option>
+            <option value="">Seleccione...</option>
             <option value="S">Si</option>
             <option value="N">No</option>
           </select>

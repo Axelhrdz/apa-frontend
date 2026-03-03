@@ -6,7 +6,7 @@ const Home = ({ user, error }) => {
 
   console.log(user);
   return (
-    <div className='bg-stone-900 text-white h-screen flex flex-col items-center justify-center'>
+    <div className='bg-[#000] text-white h-screen flex flex-col items-center justify-center'>
       <h1>Home</h1>
       {/*---- render error ----- */}
       {error && <p className='text-red-500'>{error}</p>}
