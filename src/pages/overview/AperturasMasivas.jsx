@@ -13,6 +13,9 @@ import { useState } from 'react';
 // }
 
 
+
+
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   
@@ -34,20 +37,20 @@ const handleSubmit = async (e) => {
     // console.log(res.data);
 
     //create blob
-    const blob = new Blob([res.data], { type: 'text/plain' });
+    // const blob = new Blob([res.data], { type: 'text/plain' });
 
     //create url from blob, to download
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', formValues.folio);
-    document.body.appendChild(link);
-    link.click();
+    // const url = URL.createObjectURL(blob);
+    // const link = document.createElement('a');
+    // link.href = url;
+    // link.setAttribute('download', formValues.folio);
+    // document.body.appendChild(link);
+    // link.click();
 
 
-    //cleanup
-    link.remove();
-    window.URL.revokeObjectURL(url);
+    // //cleanup
+    // link.remove();
+    // window.URL.revokeObjectURL(url);
 
 
     return res.data;
@@ -60,6 +63,17 @@ const handleSubmit = async (e) => {
 const AperturasMasivas = () => {
 
   // const [tipoPredio, setTipoPredio] = useState('null');
+  const [localidad, setLocalidad] = useState('');
+  const [colonia, setColonia] = useState('');
+
+
+  const handleChangeLocalidad = (e) => {
+    setLocalidad(e.target.value.toUpperCase());
+  }
+
+  const handleChangeColonia = (e) => {
+    setColonia(e.target.value.toUpperCase());
+  }
 
   
   return (
@@ -76,6 +90,16 @@ const AperturasMasivas = () => {
         <div className='flex flex-col gap-2'>
           <label htmlFor="folio">Folio / nombre del archivo</label>
           <input required type="text" name='folio' id='folio' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' />
+        </div>
+
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="localidad">Localidad</label>
+          <input required type="text" name='localidad' id='localidad' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' onChange={handleChangeLocalidad} value={localidad}/>
+        </div>
+
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="colonia">Colonia</label>
+          <input required type="text" name='colonia' id='colonia' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' onChange={handleChangeColonia} value={colonia}/>
         </div>
 
         <div>
