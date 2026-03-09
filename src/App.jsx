@@ -33,8 +33,8 @@ function App() {
       if(token) {
         try {
           const res = await axios.get(
-            'http://localhost:3000/users/me', 
-            // 'https://apa-backend-2g9k.onrender.com/users/me',
+            // 'http://localhost:3000/users/me', 
+            'https://apa-backend-2g9k.onrender.com/users/me',
             {
             headers: { Authorization: `Bearer ${token}` },
           });
