@@ -28,8 +28,8 @@ const handleSubmit = async (e) => {
 
   try {
     const res = await axios.post(
-      // 'https://apa-backend-2g9k.onrender.com/aperturas_masivas/apertura', formData,
-      'http://localhost:3000/aperturas_masivas/apertura', formData,
+      'https://apa-backend-2g9k.onrender.com/aperturas_masivas/apertura', formData,
+      // 'http://localhost:3000/aperturas_masivas/apertura', formData,
       {
         responseType: 'blob',
       }
@@ -77,7 +77,7 @@ const AperturasMasivas = () => {
 
   
   return (
-    <div className='bg-[#000] text-white h-screen'>
+    <div className='bg-[#fff] text-black h-screen'>
       <div className='text-center text-2xl font-thin py-5 '>
         <h1>Aperturas Masivas</h1>
       </div>
@@ -86,7 +86,7 @@ const AperturasMasivas = () => {
       <br />
       <br />
 
-      <form encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone_700 text-white p-4 max-w-md mx-auto border-1'>
+      <form encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone_700 text-black p-4 max-w-md mx-auto border-1'>
         <div className='flex flex-col gap-2'>
           <label htmlFor="folio">Folio / nombre del archivo</label>
           <input required type="text" name='folio' id='folio' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' />
