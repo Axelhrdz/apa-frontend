@@ -1,70 +1,98 @@
 import React from 'react'
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-
-
-// const [conexiones, setConexiones] = useState('null');
-// const [cobros, setCobros] = useState('null');
-// const [baldio, setBaldio] = useState('null');
-
-// const handleTipoPredioChange = (e) => {
-//   setTipoPredio(e.target.value);
-// }
-
-
-
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-
-  //getting form data
-  const formData = new FormData(e.target);
-  const formValues = Object.fromEntries(formData);
-  console.log(formValues);  //here getting the file value and the other values 
-
-
-  try {
-    const res = await axios.post(
-      'https://apa-backend-2g9k.onrender.com/aperturas_masivas/apertura', formData,
-      // 'http://localhost:3000/aperturas_masivas/apertura', formData,
-      {
-        responseType: 'blob',
-      }
-    );
-    // console.log(res.data);
-
-    //create blob
-    // const blob = new Blob([res.data], { type: 'text/plain' });
-
-    //create url from blob, to download
-    // const url = URL.createObjectURL(blob);
-    // const link = document.createElement('a');
-    // link.href = url;
-    // link.setAttribute('download', formValues.folio);
-    // document.body.appendChild(link);
-    // link.click();
-
-
-    // //cleanup
-    // link.remove();
-    // window.URL.revokeObjectURL(url);
-
-
-    return res.data;
-  } catch (error) {
-    console.error('Error during fetching operation:', error);
-  }
-};
 
 
 const AperturasMasivas = () => {
 
+  const timeoutRef = useRef(null);
+
+  
   // const [tipoPredio, setTipoPredio] = useState('null');
   const [localidad, setLocalidad] = useState('');
   const [colonia, setColonia] = useState('');
+  // const [statusCode, setStatusCode] = useState(null);
+  const [feedback, setFeedback] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  //Cleanup: cancel pending timeout on component unmount
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+  
+    //getting form data
+    const formData = new FormData(e.target);
+    const formValues = Object.fromEntries(formData);
+    console.log(formValues);  //here getting the file value and the other values 
+  
+  
+    try {
+      const res = await axios.post(
+        // 'https://apa-backend-2g9k.onrender.com/aperturas_masivas/apertura', formData,
+        `${import.meta.env.VITE_API_BASE_URL}/aperturas_masivas/apertura`, formData,
+        {
+          // responseType: 'blob',
+          responseType: 'json',
+        }
+      );
+  
+      
+      
+      clearTimeout(timeoutRef.current);
+      setFeedback({
+        type: 'success',
+        message: 'Apertura masiva enviada correctamente',
+        statusCode: res?.data?.status || null
+      })
+      timeoutRef.current = setTimeout(() => {
+        setFeedback(null);
+      }, 4000);
+
+
+    
+      console.log(res?.data?.status)
+
+      
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      
+      if(error.response){
+        clearTimeout(timeoutRef.current);
+        setFeedback({
+          type: 'error',
+          message: 'Error al enviar la apertura masiva',
+          statusCode: error.response?.data?.status || null
+        })
+        timeoutRef.current = setTimeout(() => {
+          setFeedback(null);
+        }, 4000);
+
+        console.log(error.response?.data?.status);
+        
+      } else {
+        // setStatusCode('NETWORK_ERROR');
+        setFeedback({
+          type: 'error',
+          message: 'No se pudo conectar con el servidor',
+          statusCode: null
+        });
+      }
+      // console.log(statusCode);
+      console.error('Error during fetching operation:', error);
+      
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
 
   const handleChangeLocalidad = (e) => {
@@ -78,6 +106,25 @@ const AperturasMasivas = () => {
   
   return (
     <div className='bg-[#fff] text-black h-screen'>
+
+      {
+        feedback?.type === 'success' ?
+          <div className='text-center text-2xl font-thin py-5 bg-green-500 text-white'>
+            {/* <h1>Status Code: {feedback.statusCode}</h1> */}
+            <span>{feedback.message}</span>
+          </div>
+        : null
+      }
+      {
+        feedback?.type === 'error' ?
+          <div className='text-center text-2xl font-thin py-5 bg-red-500 text-white'>
+            {/* <h1>Status Code: {feedback.statusCode}</h1> */}
+            <span>{feedback.message}</span>
+          </div>
+        : null
+      }
+
+
       <div className='text-center text-2xl font-thin py-5 '>
         <h1>Aperturas Masivas</h1>
       </div>
@@ -158,7 +205,7 @@ const AperturasMasivas = () => {
           </select>
         </div>
 
-        <button type='submit' className='text-white bg-blue-500 px-4 py-2 rounded-md cursor-pointer'>Enviar</button>
+        <button type='submit' disabled={isLoading} className={`${isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 cursor-pointer'} text-white px-4 py-2 rounded-md`}>{isLoading ? 'Enviando...' : 'Enviar'}</button>
       </form>
     </div>
   )
