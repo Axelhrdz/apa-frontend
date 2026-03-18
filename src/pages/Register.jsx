@@ -36,7 +36,7 @@ const Register = ({ setUser }) => {
 
         try {
             const res = await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}/auth/register`, 
+                `${import.meta.env.VITE_API_BASE_URL}/register`, 
                 formData
             );
             console.log(res.data);
