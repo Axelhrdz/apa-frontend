@@ -35,8 +35,7 @@ const Login = ({ setUser }) => {
 
         try {
             const res = await axios.post(
-                'http://localhost:3000/auth/login', 
-                // 'https://apa-backend-2g9k.onrender.com/auth/login',
+                `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
                 formData
             );
             console.log(res.data);
