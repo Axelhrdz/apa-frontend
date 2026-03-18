@@ -33,8 +33,7 @@ function App() {
       if(token) {
         try {
           const res = await axios.get(
-            'http://localhost:3000/users/me', 
-            // 'https://apa-backend-2g9k.onrender.com/users/me',
+            `${import.meta.env.VITE_API_BASE_URL}/users/me`,
             {
             headers: { Authorization: `Bearer ${token}` },
           });

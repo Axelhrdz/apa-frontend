@@ -36,8 +36,7 @@ const Register = ({ setUser }) => {
 
         try {
             const res = await axios.post(
-                'http://localhost:3000/auth/register', 
-                // 'https://apa-backend-2g9k.onrender.com/auth/register',
+                `${import.meta.env.VITE_API_BASE_URL}/auth/register`, 
                 formData
             );
             console.log(res.data);
