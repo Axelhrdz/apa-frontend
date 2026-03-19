@@ -1,1 +1,8 @@
+@import "@fontsource-variable/geist-sans";
+@import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
+
+@theme {
+    --font-sans: "Geist Variable", sans-serif;
+    --font-mono: "Geist Mono Variable", monospace;
+  }
