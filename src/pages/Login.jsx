@@ -49,28 +49,28 @@ const Login = ({ setUser }) => {
             navigate('/');
         }
         catch(error) {
-            setError('Failed to login');
+            setError('Error al iniciar sesion');
             console.log(error);
         }
     }
 
 
-
     
   return (
-    <div id='login-page-container' className='font-sans bg-[#F7F5F2] text-black h-screen flex flex-col gap-5 items-center justify-center'>
+    <div id='login-page-container' className='font-sans bg-[#FFF] text-black h-screen flex flex-col gap-5 items-center justify-center'>
         <div id='wrapper-div' className='w-full max-w-md'>
             <div id='login-page-div' className='flex flex-col gap-2 items-center justify-center mb-8'>
                 <h1 className='font-normal text-3xl'>Bienvenido de nuevo</h1>
                 <span className='font-normal text-md text-stone-600'>Inicia sesion para continuar</span>
+                {error && <p className='text-red-500'>{error}</p>}
             </div>
-            <div id='input-form-div' className='rounded-md w-[100%]'>
+            <div id='input-form-div' className='w-[100%]'>
                 <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
 
                     <div className='flex gap-0.2 flex-col items-start justify-center'>
                         <InputLabel 
                             htmlFor='email'
-                            label='CORREO ELECTRONICO'
+                            label='Correo electronico'
                         />
                         <Input 
                             placeholder='correo@ejemplo.com'
@@ -85,7 +85,7 @@ const Login = ({ setUser }) => {
                     <div className='flex gap-1 flex-col items-start justify-center'>
                     <InputLabel 
                             htmlFor='numEmpleado'
-                            label='NUMERO DE EMPLEADO'
+                            label='Numero de empleado'
                         />
                         <Input 
                             placeholder='12345'
@@ -100,7 +100,7 @@ const Login = ({ setUser }) => {
                     <div className='flex gap-1 flex-col items-start justify-center'>
                     <InputLabel 
                             htmlFor='password'
-                            label='CONTRASEÑA'
+                            label='Contraseña'
                         />
                         <Input 
                             placeholder='Escribe tu contraseña'
@@ -112,20 +112,6 @@ const Login = ({ setUser }) => {
                             name='password'
                         />
                     </div>
-
-                    {/* <div className='email-input-div flex gap-4'>
-                        <label htmlFor="email">Email</label>
-                        <input className='bg-stone-100 text-black' type="email" id="email" required placeholder='Enter your email' name='email' onChange={handleChange} value={formData.email} />
-                    </div>
-                    <div className='numEmpleado-input-div flex gap-4'>
-                        <label htmlFor="numEmpleado">Numero de emeplado</label>
-                        <input className='bg-stone-100 text-black' type="text" id='numEmpleado' required placeholder='Enter your number employee' name='numEmpleado' onChange={handleChange} value={formData.numEmpleado}/>
-                    </div>
-                    <div className='password-input-div flex gap-4'>
-                        <label htmlFor="password">Password</label>
-                        <input className='bg-stone-100 text-black' type="password" id='password' required placeholder='Enter your password' name='password'onChange={handleChange} value={formData.password} />
-                    </div> */}
-                    {/* <button type='submit' className='bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer'>Login</button> */}
                     <ButtonPrimary 
                         type='submit'
                         disabled={false}
@@ -142,7 +128,7 @@ const Login = ({ setUser }) => {
             </div>
             
         </div>
-        {error && <p className='text-red-500'>{error}</p>}
+        
         
     </div>
   )
