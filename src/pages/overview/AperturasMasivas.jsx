@@ -1,12 +1,36 @@
 import React from 'react'
 import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
+import { DataGrid } from 'react-data-grid';
+
+//UI components imports
+import InputCompact from '../../components/ui/InputCompact';
+import SelectCompact from '../../components/ui/SelectCompact';
+import InputLabel from '../../components/ui/InputLabel';
+import ButtonPrimary from '../../components/ui/ButtonPrimary';
+
+
 
 
 
 const AperturasMasivas = () => {
 
   const timeoutRef = useRef(null);
+  const [previewData, setPreviewData] = useState(null);
+  console.log('previewData', previewData);
+
+  const [previewVisible, setPreviewVisible] = useState(false);
+  console.log('previewVisible', previewVisible);
+
+  const [confirmPreview, setConfirmPreview] = useState(false);
+  console.log('confirmPreview', confirmPreview);
+
+  //DATA GRID SECTION
+  const [columns, setColumns] = useState([]);
+  console.log('columns', columns);
+
+  const [rows, setRows] = useState([]);
+  console.log('rows', rows);
 
   
   // const [tipoPredio, setTipoPredio] = useState('null');
@@ -24,12 +48,65 @@ const AperturasMasivas = () => {
     };
   }, []);
 
+
+  const formRef = useRef(null);
+
+
+
+
+
+
+  const handlePreview = async (e) => {
+    console.log('desde handlePreview');
+
+
+    //get form data
+    const formData = new FormData(formRef.current);
+    const formValues = Object.fromEntries(formData);
+    console.log(formValues.file);
+
+    setConfirmPreview(false);
+
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/preview`, formData);
+      // console.log(res.data);
+      const gridData = res.data;
+      setPreviewData(res.data);
+      setPreviewVisible(true);
+
+
+      const columns = Object.keys(gridData.jsonData[0]).map((key) => {
+        return { key, name: key };
+      });
+      setColumns(columns);
+
+      const rows = gridData.jsonData.map((item) => { return { id: item.id, ...item } });
+      setRows(rows);
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+  const handleConfirmPreview = async (e) => {
+    e.preventDefault();
+    setConfirmPreview(true);
+  }
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!confirmPreview) return;
+
+    console.log('from handleSubmit');
     setIsLoading(true);
   
     //getting form data
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData);
     console.log(formValues);  //here getting the file value and the other values 
   
@@ -105,108 +182,194 @@ const AperturasMasivas = () => {
 
   
   return (
-    <div className='bg-[#fff] text-black h-screen'>
+    <div className='flex gap-4 w-full h-screen'>
+      <div className='bg-[#fff] text-black h-screen w-full max-w-[20%] border-r-1 border-stone-300'>
 
-      {
-        feedback?.type === 'success' ?
-          <div className='text-center text-2xl font-thin py-5 bg-green-500 text-white'>
-            {/* <h1>Status Code: {feedback.statusCode}</h1> */}
-            <span>{feedback.message}</span>
-          </div>
-        : null
-      }
-      {
-        feedback?.type === 'error' ?
-          <div className='text-center text-2xl font-thin py-5 bg-red-500 text-white'>
-            {/* <h1>Status Code: {feedback.statusCode}</h1> */}
-            <span>{feedback.message}</span>
-          </div>
-        : null
-      }
+        {
+          feedback?.type === 'success' ?
+            <div className='text-center text-2xl font-thin py-5 bg-green-500 text-white'>
+              {/* <h1>Status Code: {feedback.statusCode}</h1> */}
+              <span>{feedback.message}</span>
+            </div>
+          : null
+        }
+        {
+          feedback?.type === 'error' ?
+            <div className='text-center text-2xl font-thin py-5 bg-red-500 text-white'>
+              {/* <h1>Status Code: {feedback.statusCode}</h1> */}
+              <span>{feedback.message}</span>
+            </div>
+          : null
+        }
 
 
-      <div className='text-center text-2xl font-thin py-5 '>
-        <h1>Aperturas Masivas</h1>
-      </div>
-      {/* <span className=''>This is the aperturas masivas page</span> */}
-      <br />
-      <br />
-      <br />
-
-      <form encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone_700 text-black p-4 max-w-md mx-auto border-1'>
-        <div className='flex flex-col gap-2'>
-          <label htmlFor="folio">Folio / nombre del archivo</label>
-          <input required type="text" name='folio' id='folio' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' />
+        <div className='h-full max-h-[10%] p-5 text-center border-b-1 border-stone-300'>
+            <h1 className='text-2xl font-thin'>Aperturas Masivas</h1>
         </div>
-
-        <div className='flex flex-col gap-2'>
-          <label htmlFor="localidad">Localidad</label>
-          <input required type="text" name='localidad' id='localidad' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' onChange={handleChangeLocalidad} value={localidad}/>
-        </div>
-
-        <div className='flex flex-col gap-2'>
-          <label htmlFor="colonia">Colonia</label>
-          <input required type="text" name='colonia' id='colonia' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer' onChange={handleChangeColonia} value={colonia}/>
-        </div>
-
-        <div>
-          <input required type="file" name='file' id='file' className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'/>
-        </div>
+        {/* <span className=''>This is the aperturas masivas page</span> */}
         
 
-        <div className='flex flex-col gap-2'>
-          <label htmlFor="tipo_servicio">Tipo de predio</label>
-          <select required id="tipo_servicio" name="tipo_servicio" className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'>
-            <option value="">Seleccione...</option>
-            <option value="H">Habitacional</option>
-            <option value="C">Comercial</option>
-            <option value="I">Industrial</option>
-            <option value="E">Uso de Gobierno</option>
-          </select>
+        <form ref={formRef} encType='multipart/form-data' action="" onSubmit={handleSubmit} className='flex flex-col gap-4 bg-stone_700 text-black p-4 max-w-md mx-auto h-[700px] overflow-y-auto'>
+
+          <div className='flex flex-col gap-2'>
+            <InputLabel
+              htmlFor='folio'
+              label='Folio / nombre del archivo'
+            />
+            <InputCompact
+              type='text'
+              name='folio'
+              id='folio'
+              required
+              placeholder={'folio / nombre del archivo'}
+            />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <InputLabel
+              htmlFor='localidad'
+              label='Localidad'
+            />
+            <InputCompact
+              type='text'
+              name='localidad'
+              id='localidad'
+              required
+              placeholder={'localidad'}
+              onChange={handleChangeLocalidad}
+              value={localidad}
+            />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <InputLabel
+              htmlFor='colonia'
+              label='colonia'
+            />
+            <InputCompact
+              type='text'
+              name='colonia'
+              id='colonia'
+              required
+              placeholder={'colonia'}
+              onChange={handleChangeColonia}
+              value={colonia}
+            />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <InputLabel
+              htmlFor='file'
+              label=''
+            />
+            <InputCompact
+              type='file'
+              name='file'
+              id='file'
+              required
+            />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <InputLabel
+              htmlFor='tipo_servicio'
+              label='Tipo de predio'
+            />
+            <SelectCompact
+              name='tipo_servicio'
+              id='tipo_servicio'
+              required
+            >
+              <option value="">Seleccione...</option>
+              <option value="H">Habitacional</option>
+              <option value="C">Comercial</option>
+              <option value="I">Industrial</option>
+              <option value="E">Uso de Gobierno</option>
+            </SelectCompact>
+          </div>
+          <div className='flex flex-col gap-2'>
+            <InputLabel
+              htmlFor='conexiones'
+              label='Conexiones'
+            />
+            <SelectCompact
+              name='conexiones'
+              id='conexiones'
+              required
+            >
+              <option value="">Seleccione...</option>
+              <option value="1">1. Ninguna</option>
+              <option value="2">2. Conexion Agua</option>
+              <option value="3">3. Conexion drenaje</option>
+              <option value="4">4. Conexion agua, conexion drenaje</option>
+            </SelectCompact>
+          </div>
+          <div className='flex flex-col gap-2'>
+            <InputLabel
+              htmlFor='cobros'
+              label='Cobros'
+            />
+            <SelectCompact
+              name='cobros'
+              id='cobros'
+              required
+            >
+              <option value="">Seleccione...</option>
+              <option value="1">1. Agua, Infraestructura y colectores</option>
+              <option value="2">2. Agua, Infraestructura</option>
+              <option value="3">3. Agua</option>
+              <option value="5">5. Infraestructura y colectores</option>
+            </SelectCompact>
+          </div>
+          <div className='flex flex-col gap-2'>
+            <InputLabel
+              htmlFor='baldio'
+              label='Baldio'
+            />
+            <SelectCompact
+              name='baldio'
+              id='baldio'
+              required
+            >
+              <option value="">Seleccione...</option>
+              <option value="S">Si</option>
+              <option value="N">No</option>
+            </SelectCompact>
+          </div>
+
+          
+
+          <button type='button' onClick={handlePreview} className='bg-stone-800 cursor-pointer text-white px-4 py-2 rounded-md'>Ver previsualizacion</button>
+
+          <button type='button' 
+          disabled={!previewVisible}
+          onClick={handleConfirmPreview} 
+          className={
+            previewVisible ?
+            'bg-stone-600 cursor-pointer text-white px-4 py-2 rounded-md' :
+            'bg-gray-500 cursor-not-allowed text-white px-4 py-2 rounded-md'
+          }>Confirmar datos</button>
+
+          <button
+            type='submit'
+            disabled={!confirmPreview || isLoading}
+            className={
+              `${!confirmPreview || isLoading ? 
+                'bg-gray-500 cursor-not-allowed' 
+                : 
+                'bg-blue-500 cursor-pointer'} text-white px-4 py-2 rounded-md`
+            }
+          >{isLoading ? 'Enviando...' : 'Enviar'}</button>
+        </form>
+
+
+      </div>
+      
+      {/* DATA GRID SECTION */}
+      <div className='w-full max-w-[80%] p-5 h-screen'>
+        <div className='h-full max-h-[10%] text-center'>
+            <h1 className='text-2xl font-thin'>Data Overview</h1>
         </div>
-
-        {/* <div className='flex flex-col gap-2'>
-          <label htmlFor="tipo_predio">Tipo de predio</label>
-          <select id="tipo_predio" name="tipo_predio" className='border-2 border-stone-300 rounded-md p-1'>
-            <option value="null">Seleccione...</option>
-            <option value="casa">Casa habitación</option>
-            <option value="terreno">Terreno</option>
-          </select>
-        </div> */}
-
-        <div className='flex flex-col gap-2'>
-          <label htmlFor="conexiones">Conexiones</label>
-          <select required id="conexiones" name="conexiones" className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'>
-            <option value="" >Seleccione...</option>
-            <option value="1">1. Ninguna</option>
-            <option value="2">2. Conexion Agua</option>
-            <option value="3">3. Conexion drenaje</option>
-            <option value="4">4. Conexion agua, conexion drenaje</option>        
-          </select>
+        <div className='h-full max-h-[90%]'>
+          <DataGrid className='rdg-light' columns={columns} rows={rows} />
         </div>
-
-        <div className='flex flex-col gap-2'>
-          <label htmlFor="cobros">Cobros</label>
-          <select required id="cobros" name="cobros" className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'>
-            <option value="">Seleccione...</option>
-            <option value="1">1. Agua, Infraestructura y colectores</option>
-            <option value="2">2. Agua, Infraestructura</option>
-            <option value="3">3. Agua</option>
-            <option value="5">5. Infraestructura y colectores</option>
-          </select>
-        </div>
-
-        <div className='flex gap-2'>
-          <label htmlFor="baldio">Baldio</label>
-          <select required id="baldio" name="baldio" className='border-2 border-stone-400 rounded-md p-1 cursor-pointer'>
-            <option value="">Seleccione...</option>
-            <option value="S">Si</option>
-            <option value="N">No</option>
-          </select>
-        </div>
-
-        <button type='submit' disabled={isLoading} className={`${isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 cursor-pointer'} text-white px-4 py-2 rounded-md`}>{isLoading ? 'Enviando...' : 'Enviar'}</button>
-      </form>
+      </div>
     </div>
   )
 }
