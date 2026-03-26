@@ -68,9 +68,9 @@ const AperturasMasivas = () => {
     setConfirmPreview(false);
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/preview`, formData);
-      // console.log(res.data);
-      const gridData = res.data;
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/preview-excel/preview`, formData);
+      console.log(res.data);
+      const gridData = res.data.jsonData;
       setPreviewData(res.data);
       setPreviewVisible(true);
 
