@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import { Link } from 'react-router-dom';
 
 
@@ -39,6 +39,10 @@ const Overview = () => {
   
   const activeOption = SIDE_OPTIONS.find(opt => opt.id === selectedOption);
 
+  useEffect(() => {
+    setSelectedOption(SIDE_OPTIONS[0].id);
+  }, []);
+
   const handleClick = (e) => {
     // console.log(`clicking options ${e.target.textContent}`);
 
@@ -58,7 +62,7 @@ const Overview = () => {
 
 
 
-      <div className='bg-white w-auto flex flex-col items-left gap-2 py-3 px-3 hover:border-r-1 border-stone-300 w-full max-w-3xs'>
+      <div className='bg-white w-auto flex flex-col items-left gap-2 py-3 px-3 border-r-1 border-stone-300 hover:border-r-1 transition duration-200 ease-in-out hover:border-blue-500 w-full max-w-3xs'>
         {/* <SideOption text='Fraccionamientos' handleClick={handleClick}  id={'fraccionamientos'} />
         <SideOption text='Aperturas masivas' handleClick={handleClick}  id={'aperturas-masivas'} />
         <SideOption text='Autosuficientes masivas' handleClick={handleClick}  id={'autosuficientes-masivas'} /> */}
@@ -90,7 +94,8 @@ const Overview = () => {
 
           {activeOption?.component
               ? React.createElement(activeOption.component)
-              : <p>Select an option from the sidebar</p>}
+              : React.createElement(SIDE_OPTIONS[0].component)
+          }
           
         </div>
       </div>

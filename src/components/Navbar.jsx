@@ -15,7 +15,7 @@ const Navbar = ({ user, setUser }) => {
   }
 
   return (
-    <nav className='flex justify-between items-center p-4 bg-white text-black border-b-1 border-stone-300'>
+    <nav className='flex justify-between items-center p-4 bg-white text-black border-b-1 border-stone-300 hover:border-r-2 transition duration-200 ease-in-out hover:border-blue-500'>
       <div>
         <Link to='/'>APA ASISTENTE</Link>
       </div>
