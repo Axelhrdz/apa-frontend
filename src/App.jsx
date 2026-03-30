@@ -36,6 +36,7 @@ function App() {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data.user); // same shape as login
+        setError('');
       } catch {
         localStorage.removeItem('token');
         setUser(null);
