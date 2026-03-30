@@ -14,6 +14,7 @@ import AutosuficientesMasivas from './pages/overview/AutosuficientesMasivas';
 
 function App() {
   const [user, setUser] = useState(null);
+  console.log('user', user);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,32 +24,27 @@ function App() {
 
   //------- Helper Functions -------
 
-
-  // console.log(`main app user info:`, user);
-
-  //create function to fetch user data
   useEffect(() => {
-    const fetchUser = async () => {
-      let token = localStorage.getItem('token');
-      if(token) {
-        try {
-          const res = await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/users/me`,
-            {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(res.data);
-        }
-        catch(error) {
-          // console.log('failed to fetch user data');
-          setError('failed to fetch user data');
-          localStorage.removeItem('token');
-        }
+    (async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setIsLoading(false);
+        return;
       }
-      setIsLoading(false);
-    };
-    fetchUser();
-  },[localStorage.getItem('token')]);
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/users/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(res.data.user); // same shape as login
+      } catch {
+        localStorage.removeItem('token');
+        setUser(null);
+        setError('failed to fetch user data');
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
   if(isLoading) {
     return (
