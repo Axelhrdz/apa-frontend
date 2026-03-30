@@ -14,7 +14,7 @@ const Home = ({ user, error }) => {
       {/* ---- render user or login message ----- */}
       {user ? (
         <div className='flex flex-col items-center justify-center'>
-          <h2>Welcome, {user.user.username}!</h2>
+          <h2>Welcome, {user?.username}!</h2>
           <span>Go to <Link className='text-blue-500' to='/overview'>Overview</Link></span>
         </div>
       ) : (
