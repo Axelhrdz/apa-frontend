@@ -24,6 +24,7 @@ const AutosuficientesMasivas = () => {
 
   const [excelFile, setExcelFile] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [fileError, setFileError] = useState(null);
   // console.log('excelFile', excelFile);
 
   const [excelFileData, setExcelFileData] = useState(null);
@@ -65,7 +66,13 @@ const AutosuficientesMasivas = () => {
   
   const handlePreview = async (e) => {
     e.preventDefault();
-    if(!selectedFile) return;
+    if(!selectedFile) {
+      setFileError('Por favor seleccione un archivo Excel o CSV');
+      setTimeout(() => {
+        setFileError(null);
+      }, 3000);
+      return;
+    };
     console.log('desde handle preview');
 
     //get form data
@@ -246,6 +253,7 @@ const AutosuficientesMasivas = () => {
               <FontAwesomeIcon icon={faEye} /> 
               Ver previsualizacion
             </button>
+            {fileError && <span className='text-red-500 font-bold'>{fileError}</span>}
           </div>
         </form>
         
@@ -277,11 +285,11 @@ const AutosuficientesMasivas = () => {
             <form onSubmit={handleSubmit} encType='multipart/form-data' className='flex flex-col gap-2 border-t-1 border-stone-300 p-4 h-full max-h-[30%]' action="">
               <div>
                 <label htmlFor="folio" className='text-sm text-stone-500'>Folio / nombre del archivo</label>
-                <input type="text" id="folio" name="folio" className='w-full p-2 border-1 border-stone-300 rounded-md' />
+                <input type="text" id="folio" name="folio" required className='w-full p-2 border-1 border-stone-300 rounded-md' />
               </div>
               <div>
                 <label htmlFor="observaciones" className='text-sm text-stone-500'>Observaciones</label>
-                <input type="text" id="observaciones" name="observaciones" className='w-full p-2 border-1 border-stone-300 rounded-md' />
+                <input type="text" id="observaciones" name="observaciones" required className='w-full p-2 border-1 border-stone-300 rounded-md' />
               </div>
               <div>
                 <button 
