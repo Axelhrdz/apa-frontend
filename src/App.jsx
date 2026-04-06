@@ -8,6 +8,10 @@ import Register from './pages/Register';
 import Overview from './components/Overview';
 import Test from './components/Test';
 
+
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminForbidden from './pages/admin/AdminForbidden';
+
 import Fraccionamientos from './pages/overview/Fraccionamientos';
 import AperturasMasivas from './pages/overview/AperturasMasivas';
 import AutosuficientesMasivas from './pages/overview/AutosuficientesMasivas';
@@ -35,6 +39,11 @@ function App() {
         const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        
+        console.log('from users/me, in front');
+        console.log(res.data.user);
+
+
         setUser(res.data.user); // same shape as login
         setError('');
       } catch {
@@ -71,11 +80,12 @@ function App() {
         {/* way of using tools component with user auth */}
         {/* <Route path='/tools' element={user ? <Tools /> : <Navigate to='/login' />} /> */}
 
+        {/* admin dashboard */}
+        <Route path='/admin' element={user && user.role === 'admin' ? <AdminDashboard /> : <AdminForbidden />} />
 
-
-        <Route path='/fraccionamientos' element={<Fraccionamientos />} />
+        <Route path='/fraccionamientos' element={user ? <Fraccionamientos /> : <Navigate to='/login' />} />
         <Route path='/aperturas-masivas' element={user ? <AperturasMasivas /> : <Navigate to='/login' />} />
-        <Route path='/autosuficientes-masivas' element={<AutosuficientesMasivas />} />
+        <Route path='/autosuficientes-masivas' element={user ? <AutosuficientesMasivas /> : <Navigate to='/login' />} />
       </Routes>
     </Router>
   )

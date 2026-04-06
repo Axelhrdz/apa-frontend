@@ -115,7 +115,6 @@ const Login = ({ setUser }) => {
                     <ButtonPrimary 
                         type='submit'
                         disabled={false}
-                        onClick={handleSubmit}
                         text='Iniciar sesion'
                     />
                 </form>
